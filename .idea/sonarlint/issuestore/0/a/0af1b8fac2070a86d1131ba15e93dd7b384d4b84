@@ -1,0 +1,18 @@
+
+W
+java:S1854C":Remove this useless assignment to local variable "output".(”ˆİô8¿ÑÄ©.
+G
+java:S1125±")Remove the literal "false" boolean value.(­ÚÊı8õ¬×Ä©.
+Z	java:S1061"9Replace this use of System.out or System.err by a logger.(ü¾şÿÿÿÿ8¿ÑÄ©.
+W
+java:S1854K":Remove this useless assignment to local variable "output".(”ˆİô8À•ÌÄ©.
+c
+java:S1192C"FDefine a constant instead of duplicating this literal "error" 3 times.(”ˆİô8´ÜöÄ©.
+[
+java:S4973M"9Use the "equals" method if value comparison was intended.(Ùç¿øÿÿÿÿ8À•ÌÄ©.
+U	java:S106L"9Replace this use of System.out or System.err by a logger.(ÉŸ¢£8 ±‡Å©.
+Z
+java:S1197"8Move the array designator from the variable to the type.(¡şÏÖøÿÿÿÿ8¿ÑÄ©.
+U	java:S106*"9Replace this use of System.out or System.err by a logger.(¨Âï8Û•ĞÇ©.
+F
+java:S1125±"(Remove the literal "true" boolean value.(­ÚÊı8À•ÌÄ©.

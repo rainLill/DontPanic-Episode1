@@ -1,48 +1,72 @@
+//https://www.codingame.com/ide/puzzle/don't-panic-episode-1
+
+/*
+Kontrolli suunda iga kolme käigu peale
+ */
+
 import java.util.*;
-import java.io.*;
-import java.math.*;
 
 class Player {
 
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
         GameData gd = new GameData();
-        int nbFloors = in.nextInt(); // number of floors
-        int width = in.nextInt(); // width of the area
-        int nbRounds = in.nextInt(); // maximum number of rounds
-        int exitFloor = in.nextInt(); // floor on which the exit is found
-        int exitPos = in.nextInt(); // position of the exit on its floor
-        int nbTotalClones = in.nextInt(); // number of generated clones
-        int nbAdditionalElevators = in.nextInt(); // ignore (always zero)
-        int nbElevators = in.nextInt(); // number of elevators
-        for (int i = 0; i < nbElevators; i++) {
-            int elevatorFloor = in.nextInt(); // floor on which this elevator is found
-            int elevatorPos = in.nextInt(); // position of the elevator on its floor
+        Scanner in = new Scanner(System.in);
+
+        /*
+        Game inputs changed:
+        Original inputs where
+        int exitFloor = in.nextInt();
+        int exitPos = in.nextInt();
+        I saved exit floor and exitPos to general floors register
+         */
+        gd.setNbFloors(in.nextInt() - 1); // number of floors
+        gd.setWidth(in.nextInt());  // width of the area
+        gd.setNbRounds(in.nextInt()); // maximum number of rounds
+        gd.setElevatorPositionOnFloor(in.nextInt(), in.nextInt());
+        gd.setNbTotalClones(in.nextInt()); // number of generated clones
+        gd.setNbAdditionalElevators(in.nextInt()); // ignore (always zero)
+        gd.setNbElevators(in.nextInt()); // number of elevators
+
+
+        /*
+        first console input - floor on which this elevator is found
+        second console input - position of the elevator on its floor
+         */
+        for (int i = 0; i < gd.getNbElevators(); i++) {
+            gd.setElevatorPositionOnFloor(in.nextInt(), in.nextInt());
         }
 
-        // game loop
-        while (true) {
+
+        while (true) { // game loop
             int cloneFloor = in.nextInt(); // floor of the leading clone
             int clonePos = in.nextInt(); // position of the leading clone on its floor
             String direction = in.next(); // direction of the leading clone: LEFT or RIGHT
 
-            // Write an action using System.out.println()
-            // To debug: System.err.println("Debug messages...");
+            String output = !direction.equals("NONE") ? gd.exitAction(clonePos, cloneFloor, direction) : "WAIT";
 
-            System.out.println("WAIT"); // action: WAIT or BLOCK
+            System.out.println(output); // action: WAIT or BLOCK
         }
     }
 
     private static class GameData {
-        private int nbFloors;
-        private int width;
-        private int nbRounds;
-        private int exitFloor;
-        private int exitPos;
-        private int nbTotalClones;
-        private int nbAdditionalElevators;
-        private int nbElevators;
-        private Map<Integer, Integer> floorElevatorPosition = new HashMap<>();
+        private int nbFloors; // number of floors
+        private int width; // width of the area
+        private int nbRounds; // maximum number of rounds
+        private int exitFloor; // floor on which the exit is found
+        private int exitPos; // position of the exit on its floor
+        private int nbTotalClones; // number of generated clones
+        private int nbAdditionalElevators; // ignore (always zero)
+        private int nbElevators; // number of elevators
+
+        private Map<Integer, Integer> elevatorPositionOnFloor = new HashMap<>();
+
+        public Integer getElevatorPositionOnFloor(Integer floor) {
+            return elevatorPositionOnFloor.get(floor);
+        }
+
+        public void setElevatorPositionOnFloor(Integer floor, Integer elevatorPosition) {
+            this.elevatorPositionOnFloor.put(floor, elevatorPosition);
+        }
 
         public int getNbFloors() {
             return nbFloors;
@@ -108,12 +132,19 @@ class Player {
             this.nbElevators = nbElevators;
         }
 
-        public Map<Integer, Integer> getFloorElevatorPosition() {
-            return floorElevatorPosition;
-        }
+        public String exitAction(Integer clonePos, Integer cloneFloor, String direction) {
+            int elevatorPos = getElevatorPositionOnFloor(cloneFloor);
 
-        public void setFloorElevatorPosition(Map<Integer, Integer> floorElevatorPosition) {
-            this.floorElevatorPosition = floorElevatorPosition;
+            String exitDirection = direction;
+            if (elevatorPos == clonePos) {
+                exitDirection = direction;
+            } else if (elevatorPos > clonePos) {
+                exitDirection = "RIGHT";
+            } else if (elevatorPos < clonePos) {
+                exitDirection = "LEFT";
+            }
+
+            return exitDirection.equals(direction) ? "WAIT" : "BLOCK";
         }
     }
 }
