@@ -18,7 +18,7 @@ class Player {
         gd.setNbFloors(in.nextInt() - 1); // number of floors
         gd.setWidth(in.nextInt());  // width of the area
         gd.setNbRounds(in.nextInt()); // maximum number of rounds
-        gd.setElevatorPositionOnFloor(in.nextInt(), in.nextInt());
+        gd.setElevatorLocations(in.nextInt(), in.nextInt());
         gd.setNbTotalClones(in.nextInt()); // number of generated clones
         gd.setNbAdditionalElevators(in.nextInt()); // ignore (always zero)
         gd.setNbElevators(in.nextInt()); // number of elevators
@@ -29,7 +29,7 @@ class Player {
         second console input - position of the elevator on its floor
          */
         for (int i = 0; i < gd.getNbElevators(); i++) {
-            gd.setElevatorPositionOnFloor(in.nextInt(), in.nextInt());
+            gd.setElevatorLocations(in.nextInt(), in.nextInt());
         }
 
 
@@ -75,7 +75,7 @@ class Player {
             return elevatorLocations.get(floor);
         }
 
-        public void setElevatorPositionOnFloor(Integer floor, Integer elevatorPosition) {
+        public void setElevatorLocations(Integer floor, Integer elevatorPosition) {
             this.elevatorLocations.put(floor, elevatorPosition);
         }
 
