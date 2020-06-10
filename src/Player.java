@@ -1,9 +1,5 @@
 //https://www.codingame.com/ide/puzzle/don't-panic-episode-1
 
-/*
-Kontrolli suunda iga kolme käigu peale
- */
-
 import java.util.*;
 
 class Player {
