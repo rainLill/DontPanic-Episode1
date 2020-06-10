@@ -54,14 +54,29 @@ class Player {
         private int nbAdditionalElevators; // ignore (always zero)
         private int nbElevators; // number of elevators
 
-        private Map<Integer, Integer> elevatorPositionOnFloor = new HashMap<>();
+        private Map<Integer, Integer> elevatorLocations = new HashMap<>();
 
-        public Integer getElevatorPositionOnFloor(Integer floor) {
-            return elevatorPositionOnFloor.get(floor);
+        /*
+        elevatorDirection = current direction by default , this in situation clonePos == elevatorPos
+        if clonePos != elevator pos, then next if else, will determine direction of elevator
+        return if elevatorDirection == direction will formalize appropriate output
+         */
+        public String exitAction(Integer clonePos, Integer cloneFloor, String direction) {
+            if (getElevatorLocation(cloneFloor).equals(clonePos)) {
+                return "WAIT";
+            }
+
+            String elevatorDirection = getElevatorLocation(cloneFloor) > clonePos ? "RIGHT" : "LEFT";
+
+            return elevatorDirection.equals(direction) ? "WAIT" : "BLOCK";
+        }
+
+        public Integer getElevatorLocation(Integer floor) {
+            return elevatorLocations.get(floor);
         }
 
         public void setElevatorPositionOnFloor(Integer floor, Integer elevatorPosition) {
-            this.elevatorPositionOnFloor.put(floor, elevatorPosition);
+            this.elevatorLocations.put(floor, elevatorPosition);
         }
 
         public int getNbFloors() {
@@ -126,21 +141,6 @@ class Player {
 
         public void setNbElevators(int nbElevators) {
             this.nbElevators = nbElevators;
-        }
-
-        public String exitAction(Integer clonePos, Integer cloneFloor, String direction) {
-            int elevatorPos = getElevatorPositionOnFloor(cloneFloor);
-
-            String exitDirection = direction;
-            if (elevatorPos == clonePos) {
-                exitDirection = direction;
-            } else if (elevatorPos > clonePos) {
-                exitDirection = "RIGHT";
-            } else if (elevatorPos < clonePos) {
-                exitDirection = "LEFT";
-            }
-
-            return exitDirection.equals(direction) ? "WAIT" : "BLOCK";
         }
     }
 }
